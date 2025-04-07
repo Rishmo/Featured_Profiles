@@ -1,0 +1,179 @@
+<!-- Declare the document type and specify the language -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Set character encoding -->
+  <meta charset="UTF-8" />
+  <!-- Make the site responsive to device width -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <!-- Page title -->
+  <title>Frontend Developer Assignment</title>
+  <!-- Include Flowbite CSS for prebuilt UI components -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.css" rel="stylesheet" />
+  <!-- Include Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<!-- Set background gradient for the body -->
+<body class="bg-gradient-to-b from-[#fef9f5] to-white">
+
+  <!-- 🌟 HERO SECTION (CAROUSEL) -->
+  <section class="max-w-7xl mx-auto px-4 mt-6">
+    <!-- Main carousel container using Flowbite data attribute -->
+    <div id="carousel" class="relative w-full" data-carousel="slide">
+
+      <!-- Wrapper for all carousel slides -->
+      <div class="relative h-64 sm:h-96 overflow-hidden rounded-lg">
+
+        <!-- 🚩 Slide 1: Image Background -->
+        <div class="hidden duration-700 ease-in-out" data-carousel-item>
+          <!-- Background image fills the entire slide area -->
+          <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2" class="absolute w-full h-full object-cover" alt="Couple background" />
+        </div>
+
+        <!-- 🚩 Slide 2: Centered Headline and Subheadline -->
+        <div class="hidden duration-700 ease-in-out flex items-center justify-center bg-[#e0f7fa]" data-carousel-item>
+          <div class="text-center px-4">
+            <h2 class="text-4xl font-bold text-gray-800">Featured Profiles</h2>
+            <p class="text-lg text-gray-600 mt-2">Curated with care to spark meaningful connections</p>
+          </div>
+        </div>
+
+        <!-- 🚩 Slide 3: Text and Image Combo (Visible by default) -->
+        <div class="duration-700 ease-in-out bg-[#fef9f5] flex flex-col md:flex-row items-center justify-center px-4 py-6" data-carousel-item="active">
+          <!-- Text block (left side on desktop) -->
+          <div class="md:w-1/2 text-center md:text-left">
+            <h2 class="text-3xl font-semibold text-gray-800">Meet your match</h2>
+            <p class="mt-2 text-gray-600">A beautiful journey starts with a meaningful introduction.</p>
+          </div>
+          <!-- Image block (right side on desktop) -->
+          <img src="https://images.unsplash.com/photo-1595433562696-1c7edc5b3a4a" class="md:w-1/3 rounded-lg mt-4 md:mt-0" alt="Happy Couple" />
+        </div>
+      </div>
+
+      <!-- Carousel Slide Indicators -->
+      <div class="absolute z-30 flex space-x-3 -translate-x-1/2 bottom-5 left-1/2">
+        <button type="button" class="w-3 h-3 rounded-full" aria-label="Slide 1" data-carousel-slide-to="0"></button>
+        <button type="button" class="w-3 h-3 rounded-full" aria-label="Slide 2" data-carousel-slide-to="1"></button>
+        <button type="button" class="w-3 h-3 rounded-full" aria-current="true" aria-label="Slide 3" data-carousel-slide-to="2"></button>
+      </div>
+    </div>
+  </section>  
+
+  <!-- 🌟 FEATURED PROFILES SECTION -->
+  <section class="max-w-7xl mx-auto px-4 py-8">
+    <!-- Section heading -->
+    <h2 class="text-3xl font-bold text-gray-800 mb-6">Featured People</h2>
+    <!-- Container where profile cards will be injected via JS -->
+    <div id="profiles" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    </div>
+  </section>
+
+  <!-- 🌟 MODAL SECTION -->
+  <!-- Modal structure for showing enlarged profile image -->
+  <div id="profileModal" tabindex="-1" aria-hidden="true"
+       class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto h-[calc(100%-1rem)] max-h-full bg-black bg-opacity-50">
+    <div class="relative w-full max-w-md mx-auto mt-20">
+      <!-- Modal content -->
+      <div class="relative bg-white rounded-lg shadow p-6">
+        <!-- Close button -->
+        <button type="button" class="absolute top-2 right-2 text-gray-400 hover:text-gray-900"
+                onclick="toggleModal(false)">
+          ✕
+        </button>
+        <!-- Image that changes dynamically -->
+        <img id="modalImage" src="" alt="Profile Avatar" class="w-40 h-40 rounded-full mx-auto"/>
+      </div>
+    </div>
+  </div>
+
+  <!-- FLOWBITE SCRIPT (for carousel functionality) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.js"></script>
+
+  <!-- 🌟 CUSTOM JS SCRIPT -->
+  <script>
+    // Array of profile data
+    const profiles = [
+      {
+        name: "Ritika",
+        age: 34,
+        tagline: "Warm, thoughtful and loves poetry",
+        location: "Vishakhapatnam, Andhra Pradesh",
+        avatar: "https://i.pravatar.cc/150?img=47",
+        description: "A grounded and creative soul, Ritika enjoys calm evenings, soulful music and meaningful conversations.",
+        hobbies: [
+          { title: "Poetry", description: "Writes and recites Hindi and Urdu verses during open mic nights" },
+          { title: "Badminton", description: "Plays recreationally with friends every weekend" },
+          { title: "Spirituality", description: "Practices meditation and reads spiritual literature regularly" },
+          { title: "Long Walks", description: "Enjoys early morning walks in city parks" }
+        ]
+      },
+      {
+        name: "Sneha",
+        age: 31,
+        tagline: "Spiritual, grounded and ready for her next chapter",
+        location: "Mumbai, Maharashtra",
+        avatar: "https://i.pravatar.cc/150?img=48",
+        description: "Sneha is rooted in values, loves connecting with people and believes in lifelong learning.",
+        hobbies: [
+          { title: "Volunteering", description: "Active in local community kitchens and NGO events" },
+          { title: "Classical Music", description: "Learns Hindustani vocals from a private tutor" },
+          { title: "Reading", description: "Avid reader of spiritual biographies and memoirs" }
+        ]
+      },
+      {
+        name: "Pavithra",
+        age: 35,
+        tagline: "Loves long walks, strategy games and filter coffee",
+        location: "Bangalore, Karnataka",
+        avatar: "https://i.pravatar.cc/150?img=49",
+        description: "An introverted extrovert who enjoys deep conversations, nature and slow living.",
+        hobbies: [
+          { title: "Road Trips", description: "Often escapes on spontaneous weekend drives to the hills" },
+          { title: "Filter Coffee", description: "A self-proclaimed connoisseur who brews her own every morning" },
+          { title: "Board Games", description: "Hosts monthly strategy game nights with close friends" }
+        ]
+      }
+    ];
+
+    // Get the container element where cards will be injected
+    const container = document.getElementById("profiles");
+
+    // Loop through each profile and create a card
+    profiles.forEach(profile => {
+      // Create card div
+      const card = document.createElement("div");
+      // Add styles to the card
+      card.className = "bg-white rounded-xl p-4 shadow-md hover:shadow-lg transition hover:scale-105 cursor-pointer border border-[1.5px] border-[#6B4226]";
+      // Set inner HTML with profile data
+      card.innerHTML = `
+        <div class="flex flex-col items-center text-center">
+          <img src="${profile.avatar}" class="w-20 h-20 rounded-full mb-2" alt="${profile.name}" />
+          <h3 class="text-lg font-semibold">${profile.name}</h3>
+          <p class="text-sm text-gray-500 mb-2">${profile.age} • ${profile.location}</p>
+          <p class="text-sm italic mb-4">${profile.tagline}</p>
+          <div class="text-left w-full">
+            <hr class="my-2 border-[#6B4226]">
+            <h4 class="font-semibold text-[#6B4226] mb-2">Hobbies</h4>
+            ${profile.hobbies.map(hobby => 
+              `<p class="mb-1"><strong>${hobby.title}:</strong> ${hobby.description}</p>`
+            ).join("")}
+          </div>
+        </div>`;
+      // Add click event to show modal with avatar
+      card.onclick = () => toggleModal(true, profile.avatar);
+      // Append card to container
+      container.appendChild(card);
+    });
+
+    // Function to toggle the modal visibility
+    function toggleModal(show, img = "") {
+      const modal = document.getElementById("profileModal");
+      const image = document.getElementById("modalImage");
+      // Show or hide modal
+      modal.classList.toggle("hidden", !show);
+      // Set image source if modal is being shown
+      if (show) image.src = img;
+    }
+  </script>
+</body>
+</html>
